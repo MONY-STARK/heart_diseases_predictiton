@@ -1,8 +1,5 @@
-framingham.csv
-data_experiment.ipynb
-__pycache__
-X_test.csv
-y_test.csv
-myenv
-hello.py
 saved_models
+notebooks
+data
+__pycache__
+myenv
