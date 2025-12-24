@@ -24,7 +24,7 @@ FEATURES = [
 
 @app.get("/", response_class=HTMLResponse)
 def home(request: Request):
-    return templates.TemplateResponse("index.html", {"request": request})
+    return templates.TemplateResponse(request, "index.html")
 
 
 # ---------- FORM PREDICTION ----------
@@ -45,11 +45,22 @@ async def predict_form(
     heartRate: float = Form(...),
     glucose: float = Form(...)
 ):
-    X = [[
-        male, age, currentSmoker, cigsPerDay, BPMeds,
-        prevalentStroke, prevalentHyp, diabetes,
-        totChol, sysBP, diaBP, BMI, heartRate, glucose
-    ]]
+    X = pd.DataFrame([{
+    "male": male,
+    "age": age,
+    "currentSmoker": currentSmoker,
+    "cigsPerDay": cigsPerDay,
+    "BPMeds": BPMeds,
+    "prevalentStroke": prevalentStroke,
+    "prevalentHyp": prevalentHyp,
+    "diabetes": diabetes,
+    "totChol": totChol,
+    "sysBP": sysBP,
+    "diaBP": diaBP,
+    "BMI": BMI,
+    "heartRate": heartRate,
+    "glucose": glucose
+    }])
 
     pred = model.predict(X)[0]
     prob = model.predict_proba(X)[0][1]
